@@ -99,90 +99,27 @@ for(var i=0; i<dest.shape[0]; ++i) {
 
 The following operators follow this rule:
 
-* add
-* addeq
-* adds
-* addseq
-* sub
-* subeq
-* subs
-* subseq
-* mul
-* muleq
-* muls
-* mulseq
-* div
-* diveq
-* divs
-* divseq
-* mod
-* modeq
-* mods
-* modseq
-* band
-* bandeq
-* bands
-* bandseq
-* bor
-* boreq
-* bors
-* borseq
-* bxor
-* bxoreq
-* bxors
-* bxorseq
-* lshift
-* lshifteq
-* lshifts
-* lshiftseq
-* rshift
-* rshifteq
-* rshifts
-* rshiftseq
-* rrshift
-* rrshifteq
-* rrshifts
-* rrshiftseq
-* lt
-* lts
-* lteq
-* ltseq
-* gt
-* gts
-* gteq
-* gtseq
-* leq
-* leqs
-* leqeq
-* leqseq
-* geq
-* geqs
-* geqeq
-* geqseq
-* max
-* maxs
-* maxeq
-* maxseq
-* min
-* mins
-* mineq
-* minseq
-* and
-* ands
-* andeq
-* andseq
-* or
-* ors
-* oreq
-* orseq
-* eq
-* eqs
-* eqeq
-* eqseq
-* neq
-* neqs
-* neqeq
-* neqseq
+* add[,s,eq,seq] - Addition, `+`
+* sub[,s,eq,seq] - Subtraction, `-`
+* mul[,s,eq,seq] - Multiplication, `*`
+* div[,s,eq,seq] - Division, `/`
+* mod[,s,eq,seq] - Modulo, `%`
+* band[,s,eq,seq] - Bitwise And, `&`
+* bor[,s,eq,seq] - Bitwise Or, `&`
+* bxor[,s,eq,seq] - Bitwise Xor, `^`
+* lshift[,s,eq,seq] - Left shift, `<<`
+* rshift[,s,eq,seq] - Signed right shift, `>>`
+* rrshift[,s,eq,seq] - Unsigned right shift, `>>>`
+* lt[,s,eq,seq] - Less than, `<`
+* gt[,s,eq,seq] - Greater than, `>`
+* leq[,s,eq,seq] - Less than or equal, `<=`
+* geq[,s,eq,seq] - Greater than or equal `>=`
+* eq[,s,eq,seq] - Equals, `===`
+* neq[,s,eq,seq] - Not equals, `!==`
+* and[,s,eq,seq] - Boolean And, `&&`
+* or[,s,eq,seq] - Boolean Or, `||`
+* max[,s,eq,seq] - Maximum, `Math.max`
+* min[,s,eq,seq] - Minimum, `Math.min`
 
 
 Special Cases
@@ -191,81 +128,71 @@ There are a few corner cases that follow slightly different rules.  These can be
 
 ### Assignment
 
+There are two assignment operators:
+
 * assign
 * assigns
 
-### Nullary operators
+`op.assign(dest, src)` copies one array into another, while `op.assigns(dest, val)` broadcasts a scalar to all elements of an array.
 
-* random
+### Nullary operators
+Nullary operators only take on argument for the array they are assigning to, and don't have any variations.  Currently there is only one of these:
+
+* random - Sets each element of an array to a random scalar between 0 and 1, `Math.random()`
 
 ### Unary operators
+Unary operators have one of two forms, they can be written as either:
 
-* not
-* noteq
-* bnot
-* bnoteq
-* neg
-* negeq
-* abs
-* abseq
-* acos
-* acoseq
-* asin
-* asineq
-* atan
-* ataneq
-* ceil
-* ceileq
-* cos
-* coseq
-* exp
-* expeq
-* floor
-* flooreq
-* log
-* logeq
-* round
-* roundeq
-* sin
-* sineq
-* sqrt
-* sqrteq
-* tan
-* taneq
+```javascript
+op.abs(dest, arg)
+```
 
+Or:
+
+```javascript
+op.abseq(dest)
+```
+
+The former version sets dest = |arg|, while in the latter the operation is applied in place.  ndarray-ops exposes the following unary operators:
+
+* not[,eq] - Boolean not, `!`
+* bnot[,eq] - Bitwise not, `~`
+* neg[,eq] - Negative, `-`
+* recip[,eq] - Reciprocal, `1.0/`
+* abs[,eq] - Absolute value, `Math.abs`
+* acos[,eq] - Inverse cosine, `Math.acos`
+* asin[,eq] - Inverse sine, `Math.asin`
+* atan[,eq] - Inverse tangent, `Math.atan`
+* ceil[,eq] - Ceiling, `Math.ceil`
+* cos[,eq] - Cosine, `Math.cos`
+* exp[,eq] - Exponent, `Math.exp`
+* floor[,eq] - Floor, `Math.floor`
+* log[,eq] - Logarithm, `Math.log`
+* round[,eq] - Round, `Math.round`
+* sin[,eq] - Sine, `Math.sin`
+* sqrt[,eq] - Square root, `Math.sqrt`
+* tan[,eq] - Tangent, `Math.tan`
 
 ### Non-symmetric binary operators
+There are also a few non-symmetric binary operators.  These operators have an extra suffix `op` which flips the order of the arguments.  There are only two of these:
 
-* atan2
-* atan2s
-* atan2sop
-* atan2eq
-* atan2seq
-* atan2opeq
-* atan2sopeq
-* pow
-* pows
-* powsop
-* poweq
-* powseq
-* powopeq
-* powsopeq
+* atan2[,s,eq,seq,op,sop,opeq,sopeq]
+* pow[,s,eq,seq,op,sop,opeq,sopeq]
 
 ### Map-reduce (aggregate) operators
 
-* any
-* all
-* sum
-* prod
-* norm2squared
-* norm2
-* norminf
-* norm1
-* sup
-* inf
-* argmin
-* argmax
-
+* any - Check if any element of the array is truthy
+* all - Checks if any element of the array is falsy
+* sum - Sums all elements of the array
+* prod - Multiplies all elements of the array
+* norm2squared - Computes the squared L2 norm
+* norm2 - Computes the L2 norm
+* norminf - Computes the L-infinity norm
+* norm1 - Computs the L1 norm
+* sup - Max element in array
+* inf - Min element in array
+* argmin - Index of min element
+* argmax - Index of max element
 
 Credits
 =======

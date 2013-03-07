@@ -28,6 +28,7 @@ var unary_ops = {
   not: "!",
   bnot: "~",
   neg: "-",
+  recip: "1.0/"
 };
 
 (function(){
@@ -124,10 +125,6 @@ var math_noncomm = [
     })
     exports[f+"s"] = cwise(Function("a", "b", "c", "a=func(b,c)"), {
       pre: Function("var func=Math."+f),
-      scalars:[1]
-    })
-    exports[f+"sop"] = cwise(Function("a", "b", "c", "a=func(b,c)"), {
-      pre: Function("var func=Math."+f),
       scalars:[2]
     })
     exports[f+"eq"] = cwise(Function("a", "b", "a=func(a,b)"), {
@@ -136,6 +133,13 @@ var math_noncomm = [
     exports[f+"seq"] = cwise(Function("a", "b", "a=func(a,b)"), {
       pre: Function("var func=Math."+f),
       scalars: [1]
+    })
+    exports[f+"op"] = cwise(Function("a", "b", "c", "a=func(c,b)"), {
+      pre: Function("var func=Math."+f)
+    })
+    exports[f+"sop"] = cwise(Function("a", "b", "c", "a=func(c,b)"), {
+      pre: Function("var func=Math."+f),
+      scalars:[2]
     })
     exports[f+"opeq"] = cwise(Function("a", "b", "a=func(b,a)"), {
       pre: Function("var func=Math."+f)
