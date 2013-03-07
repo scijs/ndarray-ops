@@ -1,0 +1,36 @@
+{
+  "name": "ndarray-ops",
+  "version": "0.0.0",
+  "description": "Common operations for ndarray arrays",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "dependencies": {
+    "cwise": "~0.0.0"
+  },
+  "devDependencies": {
+    "tap": "~0.4.0",
+    "ndarray": "~0.0.2"
+  },
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikolalysenko/ndarray-ops.git"
+  },
+  "keywords": [
+    "ndarray",
+    "math",
+    "operations",
+    "scientific",
+    "linear",
+    "algebra"
+  ],
+  "author": "Mikola Lysenko",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "dbc9e44102e02575a0de5feb71b47674422d8e49"
+}
