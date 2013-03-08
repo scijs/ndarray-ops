@@ -8,7 +8,7 @@
     "test": "test"
   },
   "dependencies": {
-    "cwise": "~0.1"
+    "cwise": "~0.1",
     "ndarray": "~0.2"
   },
   "devDependencies": {
