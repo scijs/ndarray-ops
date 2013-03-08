@@ -1,4 +1,5 @@
-var cwise = require("cwise");
+var cwise = require("cwise")
+var ndarray = require("ndarray")
 
 var assign_ops = {
   add:  "+",
@@ -17,10 +18,22 @@ var assign_ops = {
 (function(){
   for(var id in assign_ops) {
     var op = assign_ops[id]
-    exports[id] = cwise("array","array","array").body(Function("a","b","c","a=b"+op+"c")).compile()
-    exports[id+"eq"] = cwise("array","array").body(Function("a","b","a"+op+"=b")).compile()
-    exports[id+"s"] = cwise("array", "scalar").body(Function("a","b","s","a=b"+op+"s")).compile()
-    exports[id+"seq"] = cwise("array","scalar").body(Function("a","s","a"+op+"=s")).compile()
+    exports[id] = cwise({
+      args: ["array","array","array"],
+      body: Function("a","b","c","a=b"+op+"c")
+    })
+    exports[id+"eq"] = cwise({
+      args: ["array","array"],
+      body: Function("a","b","a"+op+"=b")
+    })
+    exports[id+"s"] = cwise({
+      args: ["array", "scalar"],
+      body: Function("a","b","s","a=b"+op+"s")
+    })
+    exports[id+"seq"] = cwise({
+      args: ["array","scalar"],
+      body: Function("a","s","a"+op+"=s")
+    })
   }
 })()
 
@@ -34,8 +47,14 @@ var unary_ops = {
 (function(){
   for(var id in unary_ops) {
     var op = unary_ops[id]
-    exports[id] = cwise("array", "array").body(Function("a","b","a="+op+"b")).compile()
-    exports[id+"eq"] = cwise("array").body(Function("a","a="+op+"a")).compile()
+    exports[id] = cwise({
+      args: ["array", "array"],
+      body: Function("a","b","a="+op+"b")
+    })
+    exports[id+"eq"] = cwise({
+      args: ["array"],
+      body: Function("a","a="+op+"a")
+    })
   }
 })()
 
@@ -53,10 +72,22 @@ var binary_ops = {
 (function() {
   for(var id in binary_ops) {
     var op = binary_ops[id]
-    exports[id] = cwise("array","array","array").body(Function("a", "b", "c", "a=b"+op+"c")).compile()
-    exports[id+"s"] = cwise("array","array","scalar").body(Function("a", "b", "s", "a=b"+op+"s")).compile()
-    exports[id+"eq"] = cwise("array", "array").body(Function("a", "b", "a=a"+op+"b")).compile()
-    exports[id+"seq"] = cwise("array", "scalar").body(Function("a", "s", "a=a"+op+"s")).compile()
+    exports[id] = cwise({
+      args: ["array","array","array"],
+      body: Function("a", "b", "c", "a=b"+op+"c")
+    })
+    exports[id+"s"] = cwise({
+      args: ["array","array","scalar"],
+      body: Function("a", "b", "s", "a=b"+op+"s")
+    })
+    exports[id+"eq"] = cwise({
+      args: ["array", "array"],
+      body: Function("a", "b", "a=a"+op+"b")
+    })
+    exports[id+"seq"] = cwise({
+      args: ["array", "scalar"],
+      body: Function("a", "s", "a=a"+op+"s")
+    })
   }
 })()
 
@@ -79,18 +110,20 @@ var math_unary = [
 (function() {
   for(var i=0; i<math_unary.length; ++i) {
     var f = math_unary[i]
-    exports[f] = cwise("array", "array")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b) {
-                    a = this.func(b)
+    exports[f] = cwise({
+                    args: ["array", "array"],
+                    pre: Function("this.func=Math."+f),
+                    body: function(a,b) {
+                      a = this.func(b)
+                    }
                   })
-                  .compile()
-    exports[f+"eq"] = cwise("array")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a) {
-                    a = this.func(a)
-                  })
-                  .compile()
+    exports[f+"eq"] = cwise({
+                      args: ["array"],
+                      pre: Function("this.func=Math."+f),
+                      body: function(a) {
+                        a = this.func(a)
+                      }
+                    })
   }
 })()
 
@@ -102,30 +135,30 @@ var math_comm = [
   for(var i=0; i<math_comm.length; ++i) {
     var f= math_comm[i]
  
-    exports[f] = cwise("array", "array", "array")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b,c) {
+    exports[f] = cwise({
+                  args:["array", "array", "array"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b,c) {
                     a = this.func(b,c)
-                  })
-                  .compile()
-    exports[f+"s"] = cwise("array", "array", "scalar")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b,c) {
+                  }
+                })
+    exports[f+"s"] = cwise({
+                  args:["array", "array", "scalar"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b,c) {
                     a = this.func(b,c)
-                  })
-                  .compile()
-    exports[f+"eq"] = cwise("array", "array")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b) {
+                  }})
+    exports[f+"eq"] = cwise({ args:["array", "array"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b) {
                     a = this.func(a,b)
-                  })
-                  .compile()
-    exports[f+"seq"] = cwise("array", "scalar")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b) {
+                  }})
+ 
+    exports[f+"seq"] = cwise({ args:["array", "scalar"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b) {
                     a = this.func(a,b)
-                  })
-                  .compile()
+                  }})
   }
 })()
 
@@ -137,133 +170,133 @@ var math_noncomm = [
 (function(){
   for(var i=0; i<math_noncomm.length; ++i) {
     var f= math_noncomm[i]
-    exports[f] = cwise("array", "array", "array")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b,c) {
+    exports[f] = cwise({ args:["array", "array", "array"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b,c) {
                     a = this.func(b,c)
-                  })
-                  .compile()
-    exports[f+"s"] = cwise("array", "array", "scalar")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b,c) {
+                  }})
+                  
+    exports[f+"s"] = cwise({ args:["array", "array", "scalar"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b,c) {
                     a = this.func(b,c)
-                  })
-                  .compile()
-    exports[f+"eq"] = cwise("array", "array")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b) {
+                  }})
+                  
+    exports[f+"eq"] = cwise({ args:["array", "array"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b) {
                     a = this.func(a,b)
-                  })
-                  .compile()
-    exports[f+"seq"] = cwise("array", "scalar")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b) {
+                  }})
+                  
+    exports[f+"seq"] = cwise({ args:["array", "scalar"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b) {
                     a = this.func(a,b)
-                  })
-                  .compile()
-    exports[f+"op"] = cwise("array", "array", "array")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b,c) {
+                  }})
+                  
+    exports[f+"op"] = cwise({ args:["array", "array", "array"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b,c) {
                     a = this.func(c,b)
-                  })
-                  .compile()
-    exports[f+"ops"] = cwise("array", "array", "scalar")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b,c) {
+                  }})
+                  
+    exports[f+"ops"] = cwise({ args:["array", "array", "scalar"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b,c) {
                     a = this.func(c,b)
-                  })
-                  .compile()
-    exports[f+"opeq"] = cwise("array", "array")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b) {
+                  }})
+                  
+    exports[f+"opeq"] = cwise({ args:["array", "array"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b) {
                     a = this.func(b,a)
-                  })
-                  .compile()
-    exports[f+"opseq"] = cwise("array", "scalar")
-                  .begin(Function("this.func=Math."+f))
-                  .body(function(a,b) {
+                  }})
+                  
+    exports[f+"opseq"] = cwise({ args:["array", "scalar"],
+                  pre: Function("this.func=Math."+f),
+                  body: function(a,b) {
                     a = this.func(b,a)
-                  })
-                  .compile()
+                  }})
+                  
   }
 })()
 
-exports.any = cwise("array")
-  .body(function(a) {
+exports.any = cwise({ args:["array"],
+  body: function(a) {
     if(a) {
       return true
     }
-  })
-  .end(function() {
+  },
+  post: function() {
     return false
-  })
-  .compile()
+  }})
+  
 
-exports.all = cwise("array")
-  .body(function(a) {
+exports.all = cwise({ args:["array"],
+  body: function(a) {
     if(!a) {
       return false
     }
-  })
-  .end(function() {
+  },
+  post: function() {
     return true
-  })
-  .compile()
+  }})
+  
 
-exports.sum = cwise("array")
-  .begin(function() {
+exports.sum = cwise({ args:["array"],
+  pre: function() {
     this.sum = 0
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     this.sum += a
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.sum
-  })
-  .compile()
+  }})
+  
 
-exports.prod = cwise("array")
-  .begin(function() {
+exports.prod = cwise({ args:["array"],
+  pre: function() {
     this.prod = 1
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     this.prod *= a
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.prod
-  })
-  .compile()
+  }})
+  
 
-exports.norm2squared = cwise("array")
-  .begin(function() {
+exports.norm2squared = cwise({ args:["array"],
+  pre: function() {
     this.sum = 0
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     this.sum += a*a
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.sum
-  })
-  .compile()
+  }})
+  
 
 
-exports.norm2 = cwise("array")
-  .begin(function() {
+exports.norm2 = cwise({ args:["array"],
+  pre: function() {
     this.sum = 0
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     this.sum += a*a
-  })
-  .end(function() {
+  },
+  post: function() {
     return Math.sqrt(this.sum)
-  })
-  .compile()
+  }})
+  
 
-exports.norminf = cwise("array")
-  .begin(function() {
+exports.norminf = cwise({ args:["array"],
+  pre: function() {
     this.n = 0
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     if(a<0){
       if(-a<this.n){
         this.n=-a
@@ -271,106 +304,114 @@ exports.norminf = cwise("array")
     } else if(a>this.n){
       s=a
     }
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.n
-  })
-  .compile()
+  }})
+  
 
-exports.norm1 = cwise("array")
-  .begin(function() {
+exports.norm1 = cwise({ args:["array"],
+  pre: function() {
     this.sum = 0
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     this.sum += a < 0 ? -a : a
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.sum
-  })
-  .compile()
+  }})
 
 
-exports.sup = cwise("array")
-  .begin(function() {
+exports.sup = cwise({ args:["array"],
+  pre: function() {
     this.hi = Number.NEGATIVE_INFINITY
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     if(a > this.hi) {
       this.hi = a
     }
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.hi
-  })
-  .compile()
+  }})
+  
 
-exports.inf = cwise("array")
-  .begin(function() {
+exports.inf = cwise({ args:["array"],
+  pre: function() {
     this.lo = Number.POSITIVE_INFINITY
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     if(a < this.lo) {
       this.lo = a
     }
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.lo
-  })
-  .compile()
+  }})
+  
 
-exports.argmin = cwise("index", "array")
-  .begin(function(i) {
+exports.argmin = cwise({ args:["index", "array"],
+  pre: function(i) {
     this.min_v = Number.POSITIVE_INFINITY
     this.min_i = i.slice(0)
-  })
-  .body(function(i, a) {
+  },
+  body: function(i, a) {
     if(a < this.min_v) {
       this.min_v = a
       for(var k=0; k<i.length; ++k) {
         this.min_i[k] = i[k]
       }
     }
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.min_i
-  })
-  .compile()
+  }})
+  
 
-exports.argmax = cwise("index", "array")
-  .begin(function(i) {
+exports.argmax = cwise({ args:["index", "array"],
+  pre: function(i) {
     this.max_v = Number.NEGATIVE_INFINITY
     this.max_i = i.slice(0)
-  })
-  .body(function(i, a) {
+  },
+  body: function(i, a) {
     if(a > this.max_v) {
       this.max_v = a
       for(var k=0; k<i.length; ++k) {
         this.max_i[k] = i[k]
       }
     }
-  })
-  .end(function() {
+  },
+  post: function() {
     return this.max_i
-  })
-  .compile()
+  }})
+  
 
-exports.random = cwise("array")
-  .begin(function() {
+exports.random = cwise({ args:["array"],
+  pre: function() {
     this.rnd = Math.random
-  })
-  .body(function(a) {
+  },
+  body: function(a) {
     a = this.rnd()
-  })
-  .compile()
+  }})
+  
 
-exports.assign = cwise("array", "array")
-  .body(function(a,b) {
+exports.assign = cwise({ args:["array", "array"],
+  body: function(a,b) {
     a = b
-  })
-  .compile()
+  }})
 
-exports.assigns = cwise("array", "scalar")
-  .body(function(a,b) {
+exports.assigns = cwise({ args:["array", "scalar"],
+  body: function(a,b) {
     a = b
-  })
-  .compile()
+  }})
+
+exports.clone = function(array) {
+  var stride = new Array(array.shape.length)
+  var tsz = 1;
+  for(var i=array.shape.length-1; i>=0; --i) {
+    stride[i] = tsz
+    tsz *= array.shape[i]
+  }
+  var result = ndarray(array.data.slice(0, tsz), array.shape.slice(0), stride, 0)
+  return exports.assign(result, array)
+}

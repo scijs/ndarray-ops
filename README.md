@@ -48,7 +48,7 @@ console.log(
 
 Conventions
 ===========
-This library implements component-wise operations for all of the operators and Math.* functions in JS, along with a few commonly used aggregate operations.  Most of the functions in the library work by applying some commutative binary operator to a pair of arrays. You call them like this:
+This library implements component-wise operations for all of the operators and Math.* functions in JS, along with a few commonly used aggregate operations.  Most of the functions in the library work by applying some symmetric binary operator to a pair of arrays. You call them like this:
 
 ```javascript
 ops.add(dest, arg1, arg2)
@@ -135,6 +135,14 @@ There are two assignment operators:
 
 `op.assign(dest, src)` copies one array into another, while `op.assigns(dest, val)` broadcasts a scalar to all elements of an array.
 
+### Copying
+
+You can also copy ndarrays using the clone() method.  For example:
+
+```javascript
+var n = ops.clone(a)
+```
+
 ### Nullary operators
 Nullary operators only take on argument for the array they are assigning to, and don't have any variations.  Currently there is only one of these:
 
@@ -180,6 +188,7 @@ There are also a few non-symmetric binary operators.  These operators have an ex
 * pow[,s,eq,seq,op,sop,opeq,sopeq]
 
 ### Map-reduce (aggregate) operators
+Finally, there are aggregate operators that take an array as input and compute some aggregate result or summary.  These functions don't have any special suffixes and all of them take a single array as input.
 
 * any - Check if any element of the array is truthy
 * all - Checks if any element of the array is falsy
