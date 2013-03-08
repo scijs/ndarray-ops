@@ -1,6 +1,6 @@
 {
   "name": "ndarray-ops",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "Common operations for ndarray arrays",
   "main": "index.js",
   "directories": {
@@ -12,7 +12,7 @@
     "ndarray": "~0.2"
   },
   "devDependencies": {
-    "tap": "~0.4.0",
+    "tap": "~0.4.0"
   },
   "scripts": {
     "test": "tap test/*.js"
