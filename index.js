@@ -27,7 +27,7 @@ var assign_ops = {
       body: Function("a","b","a"+op+"=b")
     })
     exports[id+"s"] = cwise({
-      args: ["array", "scalar"],
+      args: ["array", "array", "scalar"],
       body: Function("a","b","s","a=b"+op+"s")
     })
     exports[id+"seq"] = cwise({
