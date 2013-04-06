@@ -412,6 +412,7 @@ exports.clone = function(array) {
     stride[i] = tsz
     tsz *= array.shape[i]
   }
-  var result = ndarray(array.data.slice(0, tsz), array.shape.slice(0), stride, 0)
+  var ndata = new array.data.constructor(array.data.slice(0, tsz*array.data.BYTES_PER_ELEMENT))
+  var result = ndarray(ndata, array.shape.slice(0), stride, 0)
   return exports.assign(result, array)
 }
