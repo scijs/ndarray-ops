@@ -135,14 +135,6 @@ There are two assignment operators:
 
 `op.assign(dest, src)` copies one array into another, while `op.assigns(dest, val)` broadcasts a scalar to all elements of an array.
 
-### Copying
-
-You can also copy ndarrays using the clone() method.  For example:
-
-```javascript
-var n = ops.clone(a)
-```
-
 ### Nullary operators
 Nullary operators only take on argument for the array they are assigning to, and don't have any variations.  Currently there is only one of these:
 

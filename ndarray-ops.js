@@ -438,15 +438,3 @@ exports.assigns = makeOp({ args:["array", "scalar"],
   body: function assigns(a,b) {
     a = b
   }})
-
-exports.clone = function clone(array) {
-  var stride = new Array(array.shape.length)
-  var tsz = 1;
-  for(var i=array.shape.length-1; i>=0; --i) {
-    stride[i] = tsz
-    tsz *= array.shape[i]
-  }
-  var ndata = new array.data.constructor(tsz)
-  var result = ndarray(ndata, array.shape.slice(0), stride, 0)
-  return exports.assign(result, array)
-}
