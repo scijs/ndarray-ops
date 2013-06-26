@@ -1,9 +1,10 @@
-var ops = require("../index.js")
+var ops = require("../ndarray-ops.js")
   , ndarray = require("ndarray")
+  , tape = require("tape")
 
-require("tap").test("clone", function(t) {
+tape("clone", function(t) {
 
-  var x = ndarray.zeros([3])
+  var x = ndarray(new Int32Array(3))
   
   x.set(0, 1)
   x.set(1, 2)
@@ -25,7 +26,5 @@ require("tap").test("clone", function(t) {
   t.equals(y.get(1), 2)
   t.equals(y.get(2), 3)
   
-
-
   t.end()
 })

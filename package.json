@@ -1,18 +1,18 @@
 {
   "name": "ndarray-ops",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "Common operations for ndarray arrays",
-  "main": "index.js",
+  "main": "ndarray-ops.js",
   "directories": {
     "example": "example",
     "test": "test"
   },
   "dependencies": {
-    "cwise": "~0.1.2",
-    "ndarray": "~0.2.0"
+    "cwise": "~0.3.2",
+    "ndarray": "~1.0.0"
   },
   "devDependencies": {
-    "tap": "~0.4.0"
+    "tape": "~1.0.4"
   },
   "scripts": {
     "test": "tap test/*.js"

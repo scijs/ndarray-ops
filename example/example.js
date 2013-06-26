@@ -1,12 +1,12 @@
 //First, import libraries
 var ndarray = require("ndarray")
-  , ops = require("../index.js")
+  , ops = require("../ndarray-ops.js")
 
 
 //Next, create some arrays
-var a = ndarray.zeros([128,128])
-  , b = ndarray.zeros([128,128])
-  , c = ndarray.zeros([128,128])
+var a = ndarray(new Float32Array(128*128))
+  , b = ndarray(new Float32Array(128*128))
+  , c = ndarray(new Float32Array(128*128))
 
 //Initialize b with some random numbers:
 ops.random(b)
