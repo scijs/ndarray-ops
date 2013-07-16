@@ -286,7 +286,7 @@ exports.any = compile({
 exports.all = compile({
   args:["array"],
   pre: EmptyProc,
-  body: {args:[{name:"a", lvalue:false, rvalue:true, count:1}], body: "if(!a){return false}", localVars: [], thisVars: []},
+  body: {args:[{name:"x", lvalue:false, rvalue:true, count:1}], body: "if(!x){return false}", localVars: [], thisVars: []},
   post: {args:[], localVars:[], thisVars:[], body:"return true"},
   funcName: "all"
 })
@@ -390,7 +390,7 @@ exports.argmin = compile({
     thisVars:["this_i","this_v"],
     localVars:[]},
   body:{
-    body:"{if(_inline_1_arg1_<this_v){this_v = _inline_1_arg1_;for(_inline_1_k=0;_inline_1_k<_inline_1_arg0_.length;++_inline_1_k){this_i[_inline_1_k]=_inline_1_arg0_[_inline_1_k]}}}",
+    body:"{if(_inline_1_arg1_<this_v){this_v=_inline_1_arg1_;for(var _inline_1_k=0;_inline_1_k<_inline_1_arg0_.length;++_inline_1_k){this_i[_inline_1_k]=_inline_1_arg0_[_inline_1_k]}}}",
     args:[
       {name:"_inline_1_arg0_",lvalue:false,rvalue:true,count:2},
       {name:"_inline_1_arg1_",lvalue:false,rvalue:true,count:2}],
@@ -406,7 +406,7 @@ exports.argmin = compile({
 exports.argmax = compile({
   args:["index","array","shape"],
   pre:{
-    body:"{this_v=Infinity;this_i=_inline_0_arg2_.slice(0)}",
+    body:"{this_v=-Infinity;this_i=_inline_0_arg2_.slice(0)}",
     args:[
       {name:"_inline_0_arg0_",lvalue:false,rvalue:false,count:0},
       {name:"_inline_0_arg1_",lvalue:false,rvalue:false,count:0},
@@ -415,7 +415,7 @@ exports.argmax = compile({
     thisVars:["this_i","this_v"],
     localVars:[]},
   body:{
-    body:"{if(_inline_1_arg1_>this_v){this_v = _inline_1_arg1_;for(_inline_1_k=0;_inline_1_k<_inline_1_arg0_.length;++_inline_1_k){this_i[_inline_1_k]=_inline_1_arg0_[_inline_1_k]}}}",
+    body:"{if(_inline_1_arg1_>this_v){this_v=_inline_1_arg1_;for(var _inline_1_k=0;_inline_1_k<_inline_1_arg0_.length;++_inline_1_k){this_i[_inline_1_k]=_inline_1_arg0_[_inline_1_k]}}}",
     args:[
       {name:"_inline_1_arg0_",lvalue:false,rvalue:true,count:2},
       {name:"_inline_1_arg1_",lvalue:false,rvalue:true,count:2}],
