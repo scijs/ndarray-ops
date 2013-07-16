@@ -197,4 +197,4 @@ Finally, there are aggregate operators that take an array as input and compute s
 
 Credits
 =======
-(c) 2013 Mikola Lysenko. BSD
+(c) 2013 Mikola Lysenko. MIT License
