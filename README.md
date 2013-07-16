@@ -1,6 +1,6 @@
 ndarray-ops
 ===========
-A collection of common mathematical operations for [ndarrays](http://github.com/mikolalysenko/ndarrays).  Implemented using [cwise](http://github.com/mikolalysenko/cwise)
+A collection of common mathematical operations for [ndarrays](http://github.com/mikolalysenko/ndarray).  Implemented using [cwise](http://github.com/mikolalysenko/cwise)
 
 Usage
 =====
