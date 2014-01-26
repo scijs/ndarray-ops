@@ -455,7 +455,7 @@ exports.equals = compile({
         localVars: [], 
         thisVars: []},
   post: {args:[], localVars:[], thisVars:[], body:"return true"},
-  funcName: "all"
+  funcName: "equals"
 })
 
 
