@@ -7,6 +7,10 @@ tape("ndarray-ops", function(t) {
   var x = ndarray(new Float64Array(10))
   var y = ndarray(new Float64Array(10))
   
+  t.assert(ops.equals(x, y))
+  y.set(2, 1)
+  t.assert(!ops.equals(x, y))
+
   ops.assigns(y, 5)
   for(var i=0; i<10; ++i) {
     t.equals(y.get(i), 5)

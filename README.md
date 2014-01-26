@@ -182,6 +182,7 @@ There are also a few non-symmetric binary operators.  These operators have an ex
 ### Map-reduce (aggregate) operators
 Finally, there are aggregate operators that take an array as input and compute some aggregate result or summary.  These functions don't have any special suffixes and all of them take a single array as input.
 
+* equals - Check if two ndarrays are equal
 * any - Check if any element of the array is truthy
 * all - Checks if any element of the array is falsy
 * sum - Sums all elements of the array
