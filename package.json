@@ -8,7 +8,7 @@
     "test": "test"
   },
   "dependencies": {
-    "cwise-compiler": "~0.0.0"
+    "cwise-compiler": "^1.0.0"
   },
   "devDependencies": {
     "tape": "~1.0.4",
