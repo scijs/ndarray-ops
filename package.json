@@ -1,6 +1,6 @@
 {
   "name": "ndarray-ops",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Common operations for ndarray arrays",
   "main": "ndarray-ops.js",
   "directories": {
