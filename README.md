@@ -7,7 +7,7 @@ Usage
 First, install the library using npm:
 
     npm install ndarray-ops
-    
+
 Then you can import the library by doing:
 
     var ops = require("ndarray-ops")
@@ -160,18 +160,19 @@ The former version sets dest = |arg|, while in the latter the operation is appli
 * neg[,eq] - Negative, `-`
 * recip[,eq] - Reciprocal, `1.0/`
 * abs[,eq] - Absolute value, `Math.abs`
+* log[,eq] - Logarithm, `Math.log`
+* exp[,eq] - Exponent, `Math.exp`
+* sqrt[,eq] - Square root, `Math.sqrt`
+* cos[,eq] - Cosine, `Math.cos`
+* sin[,eq] - Sine, `Math.sin`
+* tan[,eq] - Tangent, `Math.tan`
 * acos[,eq] - Inverse cosine, `Math.acos`
 * asin[,eq] - Inverse sine, `Math.asin`
 * atan[,eq] - Inverse tangent, `Math.atan`
 * ceil[,eq] - Ceiling, `Math.ceil`
-* cos[,eq] - Cosine, `Math.cos`
-* exp[,eq] - Exponent, `Math.exp`
 * floor[,eq] - Floor, `Math.floor`
-* log[,eq] - Logarithm, `Math.log`
 * round[,eq] - Round, `Math.round`
-* sin[,eq] - Sine, `Math.sin`
-* sqrt[,eq] - Square root, `Math.sqrt`
-* tan[,eq] - Tangent, `Math.tan`
+* isnan[,eq] - Is NaN, `arg !== arg`
 
 ### Non-symmetric binary operators
 There are also a few non-symmetric binary operators.  These operators have an extra suffix `op` which flips the order of the arguments.  There are only two of these:
