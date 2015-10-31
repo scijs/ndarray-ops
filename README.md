@@ -133,7 +133,7 @@ There are two assignment operators:
 * assign
 * assigns
 
-`op.assign(dest, src)` copies one array into another, while `op.assigns(dest, val)` broadcasts a scalar to all elements of an array.
+`ops.assign(dest, src)` copies one array into another, while `ops.assigns(dest, val)` broadcasts a scalar to all elements of an array.
 
 ### Nullary operators
 Nullary operators only take on argument for the array they are assigning to, and don't have any variations.  Currently there is only one of these:
@@ -144,13 +144,13 @@ Nullary operators only take on argument for the array they are assigning to, and
 Unary operators have one of two forms, they can be written as either:
 
 ```javascript
-op.abs(dest, arg)
+ops.abs(dest, arg)
 ```
 
 Or:
 
 ```javascript
-op.abseq(dest)
+ops.abseq(dest)
 ```
 
 The former version sets dest = |arg|, while in the latter the operation is applied in place.  ndarray-ops exposes the following unary operators:
