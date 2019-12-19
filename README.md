@@ -62,7 +62,7 @@ for(var i=0; i<dest.shape[0]; ++i) {
 }
 ```
 
-It is up to you to specify where the result gets store.  This library does not create new arrays for you to avoid performing expensive intermediate allocations.  There are also a few other variations:
+It is up to you to specify where the result gets stored.  This library does not create new arrays for you to avoid performing expensive intermediate allocations.  There are also a few other variations:
 
 ```javascript
 ops.addeq(dest, arg1)
