@@ -40,14 +40,14 @@ function pcompile(user_args) {
   })
 }
 
-function makeOp(user_args) {
-  var args = []
-  for(var i=0; i<user_args.args.length; ++i) {
-    args.push("a"+i)
+function wrapper(P) {
+  return function() {
+    P.apply(this, arguments)
+    return arguments[0]
   }
-  var wrapper = new Function("P", [
-    "return function ", user_args.funcName, "_ndarrayops(", args.join(","), ") {P(", args.join(","), ");return a0}"
-  ].join(""))
+}
+
+function makeOp(user_args) {
   return wrapper(pcompile(user_args))
 }
 
@@ -314,7 +314,7 @@ exports.norm2squared = compile({
   post: {args:[], localVars:[], thisVars:["this_s"], body:"return this_s"},
   funcName: "norm2squared"
 })
-  
+
 exports.norm2 = compile({
   args:["array"],
   pre: {args:[], localVars:[], thisVars:["this_s"], body:"this_s=0"},
@@ -322,7 +322,7 @@ exports.norm2 = compile({
   post: {args:[], localVars:[], thisVars:["this_s"], body:"return Math.sqrt(this_s)"},
   funcName: "norm2"
 })
-  
+
 
 exports.norminf = compile({
   args:["array"],
@@ -426,7 +426,7 @@ exports.argmax = compile({
     args:[],
     thisVars:["this_i"],
     localVars:[]}
-})  
+})
 
 exports.random = makeOp({
   args: ["array"],
@@ -450,9 +450,9 @@ exports.equals = compile({
   args:["array", "array"],
   pre: EmptyProc,
   body: {args:[{name:"x", lvalue:false, rvalue:true, count:1},
-               {name:"y", lvalue:false, rvalue:true, count:1}], 
-        body: "if(x!==y){return false}", 
-        localVars: [], 
+               {name:"y", lvalue:false, rvalue:true, count:1}],
+        body: "if(x!==y){return false}",
+        localVars: [],
         thisVars: []},
   post: {args:[], localVars:[], thisVars:[], body:"return true"},
   funcName: "equals"
