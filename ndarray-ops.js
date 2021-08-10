@@ -40,15 +40,8 @@ function pcompile(user_args) {
   })
 }
 
-function wrapper(P) {
-  return function() {
-    P.apply(this, arguments)
-    return arguments[0]
-  }
-}
-
 function makeOp(user_args) {
-  return wrapper(pcompile(user_args))
+  return pcompile(user_args)
 }
 
 var assign_ops = {
